@@ -3,11 +3,11 @@
  * Recreates bunqlabs.com's 3D low-poly mountain peak, 4,000 falling snow particles,
  * floating showreel screen, tilted orbital ring, spinning 4-point red star, and pointer parallax.
  */
-import * as THREE from 'three';
+const THREE = window.THREE;
 
-export function initHeroStage() {
+function initHeroStage() {
   const canvas = document.getElementById('gl');
-  if (!canvas) return null;
+  if (!canvas || !THREE) return null;
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -89,8 +89,32 @@ export function initHeroStage() {
 
   // 2. Floating 3D Showreel Screen + Orbital Ring + Spinning 4-Point Red Star
   const showreelGroup = new THREE.Group();
-  showreelGroup.position.set(0, 1.95, -0.4);
+  showreelGroup.position.set(0, 2.05, -0.35);
   rootGroup.add(showreelGroup);
+
+  // Atmospheric God-Ray Halo Plane behind the showreel & mountain ridge
+  const haloCanvas = document.createElement('canvas');
+  haloCanvas.width = 256;
+  haloCanvas.height = 256;
+  const hCtx = haloCanvas.getContext('2d');
+  if (hCtx) {
+    const hGrad = hCtx.createRadialGradient(128, 128, 8, 128, 128, 124);
+    hGrad.addColorStop(0, 'rgba(130, 148, 215, 0.36)');
+    hGrad.addColorStop(0.45, 'rgba(255, 50, 50, 0.12)');
+    hGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    hCtx.fillStyle = hGrad;
+    hCtx.fillRect(0, 0, 256, 256);
+  }
+  const haloTex = new THREE.CanvasTexture(haloCanvas);
+  const haloGeo = new THREE.PlaneGeometry(9.5, 6.2);
+  const haloMat = new THREE.MeshBasicMaterial({
+    map: haloTex,
+    transparent: true,
+    depthWrite: false
+  });
+  const haloMesh = new THREE.Mesh(haloGeo, haloMat);
+  haloMesh.position.set(0, 1.35, -1.6);
+  rootGroup.add(haloMesh);
 
   // Dynamic Canvas Texture for the 3D Showreel Screen
   const screenCanvas = document.createElement('canvas');
@@ -291,10 +315,17 @@ export function initHeroStage() {
     rootGroup.rotation.y = currentX * 0.16;
     rootGroup.rotation.x = currentY * 0.07;
 
-    showreelGroup.position.y = 1.95 + Math.sin(elapsed * 1.3) * 0.08 - scrollY * 0.0012;
+    showreelGroup.position.y = 2.05 + Math.sin(elapsed * 1.3) * 0.08 - scrollY * 0.0012;
     showreelGroup.rotation.y = Math.sin(elapsed * 0.5) * 0.12 + currentX * 0.12;
     ringMesh.rotation.z = elapsed * 0.35;
 
+    // Orbit the 4-point red star along the tilted orbital ring perimeter
+    const orbitAngle = elapsed * 0.55;
+    starMesh.position.set(
+      Math.cos(orbitAngle) * 1.72,
+      Math.sin(orbitAngle) * Math.cos(Math.PI * 0.38) * 1.72,
+      Math.sin(orbitAngle) * Math.sin(Math.PI * 0.38) * 1.72 + 0.12
+    );
     starMesh.rotation.z = -elapsed * 1.8;
     starMesh.rotation.y = elapsed * 1.2;
 

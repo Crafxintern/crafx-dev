@@ -5,9 +5,7 @@
  * 3D curved project card carousel, process horizontal accordion, reviews slider,
  * FAQ accordion, and 3-step enquiry form.
  */
-import { PROJECTS_DATA, CLIENT_REVIEWS_PLACEHOLDERS } from '../data/crafxData.js';
-
-export function initAllInteractions() {
+function initAllInteractions() {
   initPreloader();
   initNavbarAndTheme();
   initSoundToggle();
@@ -55,9 +53,17 @@ function initPreloader() {
     }
   }
   requestAnimationFrame(tick);
+
+  // Fail-safe preloader unlock so #loader never stays stuck even if rAF is throttled
+  setTimeout(() => {
+    countEl.textContent = '100';
+    loader.classList.add('is-done');
+    document.documentElement.dataset.gate = 'open';
+    triggerHeroScramble();
+  }, 850);
 }
 
-export function scrambleText(el, finalStr, durationMs = 700) {
+function scrambleText(el, finalStr, durationMs = 700) {
   if (!el) return;
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789//[]';
   const start = performance.now();
@@ -82,12 +88,39 @@ export function scrambleText(el, finalStr, durationMs = 700) {
   requestAnimationFrame(frame);
 }
 
+let scrambleLoopStarted = false;
 function triggerHeroScramble() {
-  const notes = document.querySelectorAll('[data-scramble]');
+  const notes = Array.from(document.querySelectorAll('[data-scramble]'));
   notes.forEach((el, i) => {
     const target = el.dataset.scramble || el.textContent;
     setTimeout(() => scrambleText(el, target, 650), i * 75);
   });
+
+  if (scrambleLoopStarted || !notes.length) return;
+  scrambleLoopStarted = true;
+
+  const altPhrases = [
+    'CRAFX DEV',
+    'PART OF CRAFX STUDIO',
+    'CUSTOM WEB DESIGN',
+    'FULL-STACK DEVELOPMENT',
+    '60FPS WEBGL & MOTION',
+    'BUILT FOR CONVERSION',
+    'UI/UX ARCHITECTURE',
+    'CORE WEB VITALS 99+',
+    'MODERN TECH STACK',
+    'SCALABLE CODEBASES',
+    'END-TO-END DELIVERY',
+    'DESIGN TO DEPLOYMENT'
+  ];
+
+  let idx = 0;
+  setInterval(() => {
+    const el = notes[idx % notes.length];
+    const phrase = altPhrases[idx % altPhrases.length];
+    idx++;
+    if (el) scrambleText(el, phrase, 680);
+  }, 3400);
 }
 
 /* ==========================================================================
@@ -541,7 +574,7 @@ function initWorkArcCarousel() {
     openBtn.addEventListener('click', () => openProjectModal(activeIndex));
   }
 
-  // Pointer drag on work-stage
+  // Pointer drag + wheel + keyboard navigation on work-stage
   let dragStartX = null;
   stage.addEventListener('pointerdown', (e) => {
     dragStartX = e.clientX;
@@ -551,9 +584,33 @@ function initWorkArcCarousel() {
     if (dragStartX === null) return;
     const dx = e.clientX - dragStartX;
     dragStartX = null;
-    if (Math.abs(dx) > 45) {
+    if (Math.abs(dx) > 40) {
       goTo(activeIndex + (dx < 0 ? 1 : -1));
     }
+  });
+
+  let wheelCooldown = false;
+  stage.addEventListener(
+    'wheel',
+    (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 18 && !wheelCooldown) {
+        wheelCooldown = true;
+        goTo(activeIndex + (e.deltaX > 0 ? 1 : -1));
+        setTimeout(() => {
+          wheelCooldown = false;
+        }, 420);
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener('keydown', (e) => {
+    if (!workSection) return;
+    const rect = workSection.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight * 0.65 && rect.bottom > window.innerHeight * 0.35;
+    if (!inView) return;
+    if (e.key === 'ArrowLeft') goTo(activeIndex - 1);
+    if (e.key === 'ArrowRight') goTo(activeIndex + 1);
   });
 
   // Custom Drag / Open cursor bubble

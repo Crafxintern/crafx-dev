@@ -8,24 +8,15 @@
   <meta name="theme-color" content="#0f0f0f" />
 
   <!-- Preload Reference Fonts -->
-  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-tight-slant-latin.woff2" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/geist-mono-latin.woff2" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/nanum-pen-script-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="./assets/fonts/inter-tight-slant-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="./assets/fonts/geist-mono-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="./assets/fonts/nanum-pen-script-latin.woff2" crossorigin />
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/src/styles/tokens.css" />
-  <link rel="stylesheet" href="/src/styles/layout.css" />
-  <link rel="stylesheet" href="/src/styles/sections.css" />
-  <link rel="stylesheet" href="/src/styles/responsive.css" />
-
-  <!-- Import Map for Zero-Build Static Servers & Vite Compatibility -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "/assets/vendor/three.module.min.js"
-      }
-    }
-  </script>
+  <!-- Stylesheets (Relative paths so both file:// and http:// local server render identically) -->
+  <link rel="stylesheet" href="./src/styles/tokens.css" />
+  <link rel="stylesheet" href="./src/styles/layout.css" />
+  <link rel="stylesheet" href="./src/styles/sections.css" />
+  <link rel="stylesheet" href="./src/styles/responsive.css" />
 </head>
 <body>
   <!-- Fixed 3D WebGL Canvas (#gl) -->
@@ -40,7 +31,7 @@
         <span>Menu</span>
       </span>
       <div id="loader-logo">
-        <img src="/assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" />
+        <img src="./assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" />
       </div>
       <span class="loader-word loader-word--end">
         <span>Loading</span>
@@ -99,7 +90,7 @@
 
         <!-- Official CRAFX DEV Logo (Unmodified 721x120 PNG) -->
         <a class="nav-logo" href="#hero" aria-label="CRAFX DEV Home">
-          <img class="nav-logo__img" src="/assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" />
+          <img class="nav-logo__img" src="./assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" />
         </a>
 
         <!-- Inline IA Section Links -->
@@ -634,7 +625,12 @@
                 <span class="pen-word" style="--i: 0">CRAFX DEV</span>
                 <span class="pen-word" style="--i: 1">is</span>
                 <span class="pen-word" style="--i: 2">a</span>
-                <span class="pen-word" style="--i: 3">creative</span>
+                <span class="pen-word" style="--i: 3">
+                  creative
+                  <svg class="pen-marks" viewBox="-8 -8 236 86" preserveAspectRatio="none" aria-hidden="true">
+                    <path pathLength="1" stroke-width="3.2" d="M26 12C88 -4 198 -2 216 28C232 54 176 74 102 72C28 70 -6 50 6 24C14 8 58 2 112 6" />
+                  </svg>
+                </span>
               </span>
               <span class="intro__line">
                 <span class="pen-word" style="--i: 4">web</span>
@@ -667,7 +663,13 @@
                 <span class="pen-word" style="--i: 17">stand</span>
                 <span class="pen-word" style="--i: 18">out</span>
                 <span class="pen-word" style="--i: 19">and</span>
-                <span class="pen-word" style="--i: 20"><span class="t-slant">scale</span></span>
+                <span class="pen-word" style="--i: 20">
+                  <span class="t-slant">scale</span>
+                  <svg class="pen-marks" viewBox="0 0 180 24" preserveAspectRatio="none" aria-hidden="true" style="top: auto; bottom: -0.18em; height: 0.26em;">
+                    <path pathLength="1" stroke-width="3.5" d="M3 10C54 4 128 5 177 8" />
+                    <path pathLength="1" stroke-width="3" d="M16 19C68 15 124 14 164 17" />
+                  </svg>
+                </span>
                 <span class="pen-word" style="--i: 21">online.</span>
               </span>
             </p>
@@ -1629,6 +1631,7 @@
          10. CONTACT US (#contact — Horizon CTA + Embedded 3-Step Enquiry Form)
          ====================================================================== -->
     <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+      <canvas id="horizon-canvas" class="contact-horizon-canvas" aria-hidden="true"></canvas>
       <div class="contact-hero">
         <p class="ph-kicker">Ready when you are</p>
         <h2 class="ph-title" id="contact-heading" style="color: #ffffff;">
@@ -1847,7 +1850,7 @@
       <div class="page-foot__band">
         <div class="page-foot__brand">
           <a href="#hero" aria-label="CRAFX DEV Home">
-            <img class="page-foot__logo-img" src="/assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" />
+            <img class="page-foot__logo-img" src="./assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" />
           </a>
           <p class="page-foot__motto">
             Crafting modern, visually impressive, and high-performing websites for ambitious brands.
@@ -1949,12 +1952,19 @@
 
       <!-- Full-Width Bottom Official Brand Lockup -->
       <div class="page-foot__giant-logo">
-        <img src="/assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" loading="lazy" />
+        <img src="./assets/brand/crafx-dev-logo.png" alt="CRAFX DEV" width="721" height="120" loading="lazy" />
       </div>
     </footer>
   </div>
 
-  <!-- Main Entry Script -->
-  <script type="module" src="/src/main.js"></script>
+  <!-- Vendor & Application Scripts (Relative classic scripts so both file:// and http:// local server execute with zero CORS issues) -->
+  <script defer src="./assets/vendor/three.min.js"></script>
+  <script defer src="./assets/vendor/gsap.min.js"></script>
+  <script defer src="./assets/vendor/lenis.min.js"></script>
+  <script defer src="./src/data/crafxData.js"></script>
+  <script defer src="./src/webgl/stageController.js"></script>
+  <script defer src="./src/components/visualRenderers.js"></script>
+  <script defer src="./src/components/interactions.js"></script>
+  <script defer src="./src/main.js"></script>
 </body>
 </html>

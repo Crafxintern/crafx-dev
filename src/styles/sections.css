@@ -570,8 +570,9 @@
 .work-section {
   position: relative;
   min-height: 108svh;
-  background: radial-gradient(60% 45% at 50% 72%, var(--active-work-glow, rgba(69, 86, 217, 0.28)), transparent 75%),
-    linear-gradient(180deg, var(--scene-work-wall-top) 0%, var(--scene-work-wall-bottom) 68%, var(--scene-work-floor) 100%);
+  background:
+    radial-gradient(56% 42% at 50% 68%, var(--active-work-glow, rgba(69, 86, 217, 0.34)), transparent 75%),
+    linear-gradient(180deg, var(--scene-work-wall-top) 0%, var(--scene-work-wall-bottom) 66%, var(--scene-work-floor) 100%);
   color: var(--ink);
   z-index: 3;
   overflow: hidden;
@@ -581,6 +582,24 @@
   padding: var(--space-16) 0 var(--space-10);
   transition: background 0.6s ease;
   user-select: none;
+}
+
+.work-section::before {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 36%;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 3.5rem 2.25rem;
+  transform: perspective(480px) rotateX(62deg);
+  transform-origin: 50% 100%;
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .work-header {
@@ -619,8 +638,8 @@
 }
 
 .work-card {
-  --card-w: clamp(17.5rem, 23vw, 22rem);
-  --card-h: calc(var(--card-w) * 1.44);
+  --card-w: clamp(18rem, 23.5vw, 22.5rem);
+  --card-h: calc(var(--card-w) * 1.365);
   width: var(--card-w);
   height: var(--card-h);
   position: absolute;
@@ -631,28 +650,32 @@
 
 .work-card__tab {
   position: absolute;
-  top: -1.65rem;
+  top: 0.75rem;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--brand, var(--c-indigo));
+  background: #141417;
   color: #ffffff;
   font-family: var(--font-mono);
   font-size: 0.625rem;
   text-transform: uppercase;
-  padding: 0.35rem 0.85rem 0.5rem;
-  border-radius: 0.5rem 0.5rem 0 0;
+  padding: 0.3rem 0.9rem 0.42rem;
+  border-radius: 0 0 0.55rem 0.55rem;
   white-space: nowrap;
-  letter-spacing: 0.04em;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25);
+  letter-spacing: 0.05em;
+  z-index: 3;
+  box-shadow: 0 0.25rem 0.6rem rgba(0, 0, 0, 0.35);
 }
 
 .work-card__body {
   width: 100%;
   height: 100%;
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--brand, var(--c-indigo)) 0%, #151518 78%, #0e0e10 100%);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1.75rem 3.5rem rgb(0 0 0 / 0.55);
-  padding: 0.65rem;
+  background: linear-gradient(180deg, #18181c 0%, #121215 72%, #0c0c0e 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.16),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08),
+    0 1.75rem 3.75rem rgb(0 0 0 / 0.62);
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1329,6 +1352,23 @@
   justify-content: space-between;
   gap: var(--space-16);
   overflow: hidden;
+}
+
+.contact-horizon-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.88;
+}
+
+.contact-hero,
+.contact-card-wrap,
+.contact-corners {
+  position: relative;
+  z-index: 2;
 }
 
 .contact-hero {

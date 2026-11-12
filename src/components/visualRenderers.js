@@ -3,12 +3,11 @@
  * Renders 60fps motion visuals for the Showreel (Section 5), Service Tabs (Section 6),
  * and 3D Arc Project Cards (Section 7), with clear [PLACEHOLDER] hooks for custom media.
  */
-import { PROJECTS_DATA, SERVICE_TABS } from '../data/crafxData.js';
-
-export function initVisualRenderers() {
+function initVisualRenderers() {
   initShowreelCanvas();
   initServiceTabCanvases();
   initProjectCardCanvases();
+  initHorizonCanvas();
 }
 
 /* 1. Section 5: Video of Our Work Interactive Showreel */
@@ -408,4 +407,80 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.lineTo(x, y + radius);
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
+}
+
+/* 4. Section 10: Contact Ocean Horizon & Shimmer Reflection Canvas */
+function initHorizonCanvas() {
+  const canvas = document.getElementById('horizon-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.max(640, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(480, Math.floor(rect.height * dpr));
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let start = performance.now();
+  function draw(now) {
+    requestAnimationFrame(draw);
+    const t = (now - start) / 1000;
+    const w = canvas.width;
+    const h = canvas.height;
+    const horizonY = h * 0.51;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Horizon sun / moon atmospheric glow
+    const sunGlow = ctx.createRadialGradient(w * 0.5, horizonY, 4, w * 0.5, horizonY, w * 0.36);
+    sunGlow.addColorStop(0, 'rgba(255, 198, 145, 0.32)');
+    sunGlow.addColorStop(0.35, 'rgba(255, 122, 24, 0.12)');
+    sunGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = sunGlow;
+    ctx.fillRect(0, 0, w, h);
+
+    // Crisp horizon seam line
+    ctx.strokeStyle = 'rgba(205, 220, 245, 0.28)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, horizonY);
+    ctx.lineTo(w, horizonY);
+    ctx.stroke();
+
+    // Animated water shimmer reflection lines below horizon
+    const rows = 36;
+    for (let i = 0; i < rows; i++) {
+      const p = i / rows;
+      const y = horizonY + 4 + Math.pow(p, 1.55) * (h - horizonY - 12);
+      const spread = (0.06 + p * 0.38) * w;
+      const sway = Math.sin(t * 1.4 + i * 0.55) * (12 + p * 28);
+      const alpha = (1 - p * 0.75) * 0.22;
+
+      ctx.strokeStyle = `rgba(215, 228, 250, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = 1 + p * 1.4;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.5 - spread * 0.5 + sway, y);
+      ctx.lineTo(w * 0.5 + spread * 0.5 + sway, y);
+      ctx.stroke();
+    }
+
+    // Subtle distant birds silhouette above horizon (matching bunqlabs.com --sea-birds)
+    const birdCount = 4;
+    ctx.strokeStyle = 'rgba(220, 228, 240, 0.38)';
+    ctx.lineWidth = 1.4;
+    for (let b = 0; b < birdCount; b++) {
+      const bx = ((w * 0.22 + b * 68 + t * (14 + b * 2)) % (w * 0.76)) + w * 0.12;
+      const by = horizonY - h * 0.12 - b * 14 + Math.sin(t * 2.1 + b) * 5;
+      const flap = Math.sin(t * 5.5 + b * 1.3) * 4;
+      ctx.beginPath();
+      ctx.moveTo(bx - 7, by + flap);
+      ctx.quadraticCurveTo(bx - 3, by - 3, bx, by);
+      ctx.quadraticCurveTo(bx + 3, by - 3, bx + 7, by + flap);
+      ctx.stroke();
+    }
+  }
+  requestAnimationFrame(draw);
 }

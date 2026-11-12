@@ -3,7 +3,7 @@
  * All [PLACEHOLDER] items are clearly marked for easy replacement with real client/project data.
  */
 
-export const AGENCY_INFO = {
+const AGENCY_INFO = {
   name: 'CRAFX DEV',
   parentStudio: 'CRAFX Studio',
   tagline: 'A creative web development agency',
@@ -27,7 +27,7 @@ export const AGENCY_INFO = {
   ]
 };
 
-export const HERO_NOTES = [
+const HERO_NOTES = [
   { pos: 'tl', line1: 'CRAFX DEV', line2: 'PART OF CRAFX STUDIO' },
   { pos: 'ml', line1: 'CUSTOM WEB DESIGN', line2: 'FULL-STACK DEVELOPMENT' },
   { pos: 'bl', line1: 'RESPONSIVE & FAST', line2: 'BUILT FOR CONVERSION' },
@@ -36,7 +36,7 @@ export const HERO_NOTES = [
   { pos: 'br', line1: 'END-TO-END DELIVERY', line2: 'DESIGN TO DEPLOYMENT' }
 ];
 
-export const CLIENT_LOGO_SLOTS = [
+const CLIENT_LOGO_SLOTS = [
   {
     id: 1,
     front: { code: 'CLIENT 01', label: '[LOGO PLACEHOLDER 01]', sector: 'SaaS & AI' },
@@ -79,7 +79,7 @@ export const CLIENT_LOGO_SLOTS = [
   }
 ];
 
-export const SERVICE_TABS = [
+const SERVICE_TABS = [
   {
     nr: '01',
     id: 'sp-visual-0',
@@ -130,7 +130,7 @@ export const SERVICE_TABS = [
   }
 ];
 
-export const SERVICE_PLANS = [
+const SERVICE_PLANS = [
   {
     key: 'launch',
     doodle: 'rocket',
@@ -184,7 +184,7 @@ export const SERVICE_PLANS = [
   }
 ];
 
-export const PROJECTS_DATA = [
+const PROJECTS_DATA = [
   {
     index: 0,
     num: '01',
@@ -325,7 +325,7 @@ export const PROJECTS_DATA = [
   }
 ];
 
-export const WHY_CHOOSE_US = [
+const WHY_CHOOSE_US = [
   {
     doodle: 'puzzle',
     title: 'Design & code under one roof',
@@ -358,7 +358,7 @@ export const WHY_CHOOSE_US = [
   }
 ];
 
-export const CLIENT_REVIEWS_PLACEHOLDERS = [
+const CLIENT_REVIEWS_PLACEHOLDERS = [
   {
     id: 'review-01',
     clientMark: '[CLIENT 01 LOGO — PLACEHOLDER]',
@@ -388,7 +388,7 @@ export const CLIENT_REVIEWS_PLACEHOLDERS = [
   }
 ];
 
-export const DELIVERY_PROMISES = [
+const DELIVERY_PROMISES = [
   {
     doodle: 'file-contract',
     text: 'Written scope, timeline, and milestones before any work begins'
@@ -407,7 +407,7 @@ export const DELIVERY_PROMISES = [
   }
 ];
 
-export const PROCESS_STEPS = [
+const PROCESS_STEPS = [
   {
     num: '01',
     name: 'Structure first',
@@ -438,7 +438,7 @@ export const PROCESS_STEPS = [
   }
 ];
 
-export const FAQ_ITEMS = [
+const FAQ_ITEMS = [
   {
     q: 'Which technologies and platforms do you build websites on?',
     a: 'We recommend the stack that best fits your goals and team workflow: custom code (React, Next.js, Astro, Three.js / WebGL, GSAP) when you need bespoke functionality or immersive performance, and Webflow, Framer, or Shopify when your marketing team needs rapid visual editing.'
