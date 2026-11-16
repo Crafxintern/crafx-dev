@@ -102,16 +102,16 @@ function triggerHeroScramble() {
   const altPhrases = [
     'CRAFX DEV',
     'PART OF CRAFX STUDIO',
-    'CUSTOM WEB DESIGN',
-    'FULL-STACK DEVELOPMENT',
-    '60FPS WEBGL & MOTION',
-    'BUILT FOR CONVERSION',
-    'UI/UX ARCHITECTURE',
-    'CORE WEB VITALS 99+',
-    'MODERN TECH STACK',
-    'SCALABLE CODEBASES',
-    'END-TO-END DELIVERY',
-    'DESIGN TO DEPLOYMENT'
+    'MUMBAI, INDIA · WORLDWIDE',
+    'WEBSITE DESIGN & BUILD',
+    'UI/UX & PRODUCT DESIGN',
+    'SAAS & DIGITAL PRODUCTS',
+    'LANDING PAGE DESIGN',
+    'WEBSITE REDESIGN',
+    'CREATIVE DEV & MOTION',
+    'DESIGNED WITH INTENT',
+    'BUILT TO WORK',
+    'DIGITAL STUDIO'
   ];
 
   let idx = 0;
@@ -251,7 +251,7 @@ function initNavbarAndTheme() {
   });
 
   // Scroll state for navbar & active inline section highlight
-  const sections = ['#hero', '#services', '#projects', '#reviews', '#contact']
+  const sections = ['#hero', '#work', '#services', '#about', '#approach', '#contact']
     .map((sel) => document.querySelector(sel))
     .filter(Boolean);
   const inlineLinks = document.querySelectorAll('.nav-inline-link');
@@ -650,6 +650,17 @@ function initWorkArcCarousel() {
     document.getElementById('pm-challenge').textContent = p.challenge;
     document.getElementById('pm-solution').textContent = p.solution;
 
+    const pmImg = document.getElementById('pm-image');
+    if (pmImg && p.coverImage) {
+      pmImg.src = p.coverImage;
+      pmImg.alt = p.title;
+    }
+
+    const pmLink = document.getElementById('pm-external-link');
+    if (pmLink && p.projectUrl) {
+      pmLink.href = p.projectUrl;
+    }
+
     const tagsWrap = document.getElementById('pm-deliverables');
     if (tagsWrap) {
       tagsWrap.innerHTML = p.deliverables
@@ -659,6 +670,15 @@ function initWorkArcCarousel() {
 
     modal.classList.add('open');
   }
+
+  document.querySelectorAll('[data-project-inspect]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const idx = Number(btn.dataset.projectInspect || 0);
+      goTo(idx);
+      openProjectModal(idx);
+    });
+  });
 
   if (closeBtn) {
     closeBtn.addEventListener('click', () => modal.classList.remove('open'));

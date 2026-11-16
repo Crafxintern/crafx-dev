@@ -1,7 +1,7 @@
 /**
- * CRAFX DEV — Interactive Canvas Visual Renderers
- * Renders 60fps motion visuals for the Showreel (Section 5), Service Tabs (Section 6),
- * and 3D Arc Project Cards (Section 7), with clear [PLACEHOLDER] hooks for custom media.
+ * CRAFX DEV — Interactive Canvas & Portfolio Visual Renderers
+ * Renders 60fps motion visuals incorporating real verified CRAFX portfolio imagery
+ * (Optellix, Fitness App UI/UX, Ekotek) for the Digital Reel, Service Tabs, and Closing Horizon.
  */
 function initVisualRenderers() {
   initShowreelCanvas();
@@ -10,7 +10,7 @@ function initVisualRenderers() {
   initHorizonCanvas();
 }
 
-/* 1. Section 5: Video of Our Work Interactive Showreel */
+/* 1. Interactive Digital Work Reel (Featuring Verified CRAFX DEV Case Studies) */
 function initShowreelCanvas() {
   const canvas = document.getElementById('showreel-canvas');
   if (!canvas) return;
@@ -27,34 +27,45 @@ function initShowreelCanvas() {
 
   const chapters = [
     {
-      code: 'CHAPTER 01 / 04',
-      title: 'UI/UX ARCHITECTURE & INTERACTIVE DESIGN',
-      sub: 'Wireframes, responsive grids, design systems & brand-first interfaces',
-      accent: '#4556d9',
-      secondary: '#6d86fe'
+      code: 'REEL 01 / 04 · OPTELLIX',
+      title: 'OPTELLIX — 3D SAAS INTERACTIVE WEBSITE DESIGN',
+      sub: 'Responsive website UI/UX, green & dark teal visual system, and conversion flows',
+      accent: '#10b981',
+      secondary: '#fdb912',
+      imgSrc: './assets/projects/optellix-cover.webp'
     },
     {
-      code: 'CHAPTER 02 / 04',
-      title: 'FULL-STACK & FRONTEND ENGINEERING',
-      sub: 'Clean semantic code in React, Next.js, Astro, Webflow & custom stacks',
-      accent: '#ff3232',
-      secondary: '#e8b94f'
+      code: 'REEL 02 / 04 · FITNESS APP UI/UX',
+      title: 'FITNESS APP — MOBILE UI/UX & BRAND CASE STUDY',
+      sub: 'Mobile application interface design, workout dashboards & cohesive identity',
+      accent: '#fdb912',
+      secondary: '#fde047',
+      imgSrc: './assets/projects/fitness-app-cover.gif'
     },
     {
-      code: 'CHAPTER 03 / 04',
-      title: 'IMMERSIVE 3D WEBGL & GSAP MOTION',
-      sub: '60fps scroll choreography, spatial galleries & tactile micro-interactions',
-      accent: '#37be95',
-      secondary: '#89efca'
+      code: 'REEL 03 / 04 · RESPONSIVE SYSTEMS',
+      title: 'MULTI-DEVICE WEB & PRODUCT INTERFACES',
+      sub: 'Desktop and mobile experiences engineered from first click to final interaction',
+      accent: '#14b8a6',
+      secondary: '#fdb912',
+      imgSrc: './assets/projects/optellix-upwork-03.webp'
     },
     {
-      code: 'CHAPTER 04 / 04',
-      title: 'MOBILE-FIRST SPEED, SEO & CMS HANDOVER',
-      sub: 'Tested on real devices with Core Web Vitals optimization & easy team editing',
-      accent: '#ff7a18',
-      secondary: '#f9cc21'
+      code: 'REEL 04 / 04 · EKOTEK DIGITAL',
+      title: 'EKOTEK — DIGITAL CATALOG & BRAND ARCHITECTURE',
+      sub: 'Structured technical product presentation and visual identity system',
+      accent: '#22c55e',
+      secondary: '#fdb912',
+      imgSrc: './assets/projects/ekotek-cover.webp'
     }
   ];
+
+  // Preload chapter images
+  const loadedImages = chapters.map((ch) => {
+    const img = new Image();
+    img.src = ch.imgSrc;
+    return img;
+  });
 
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
@@ -89,21 +100,21 @@ function initShowreelCanvas() {
     const h = canvas.height;
     const chIdx = (Math.floor(elapsed / 6) + manualChapterOffset) % chapters.length;
     const ch = chapters[chIdx];
+    const chImg = loadedImages[chIdx];
     const chProgress = (elapsed % 6) / 6;
 
-    // Background gradient
     const bg = ctx.createLinearGradient(0, 0, w, h);
-    bg.addColorStop(0, '#0d0f17');
-    bg.addColorStop(0.55, '#151722');
-    bg.addColorStop(1, '#0b0c10');
+    bg.addColorStop(0, '#080808');
+    bg.addColorStop(0.55, '#111111');
+    bg.addColorStop(1, '#060606');
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, w, h);
 
-    // Animated perspective architectural grid
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.055)';
+    // Subtle studio grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
     ctx.lineWidth = 1;
     const step = Math.floor(w / 18);
-    const shift = (elapsed * 36) % step;
+    const shift = (elapsed * 28) % step;
     for (let x = -step; x < w + step; x += step) {
       ctx.beginPath();
       ctx.moveTo(x + shift, 0);
@@ -118,23 +129,23 @@ function initShowreelCanvas() {
     }
 
     // Dynamic ambient glow
-    const gx = w * 0.5 + Math.cos(elapsed * 0.9) * (w * 0.18);
-    const gy = h * 0.48 + Math.sin(elapsed * 1.1) * (h * 0.12);
-    const glow = ctx.createRadialGradient(gx, gy, 10, gx, gy, w * 0.42);
-    glow.addColorStop(0, ch.accent + '66');
-    glow.addColorStop(0.5, ch.secondary + '22');
+    const gx = w * 0.5 + Math.cos(elapsed * 0.8) * (w * 0.16);
+    const gy = h * 0.46 + Math.sin(elapsed * 1.0) * (h * 0.1);
+    const glow = ctx.createRadialGradient(gx, gy, 10, gx, gy, w * 0.44);
+    glow.addColorStop(0, ch.accent + '44');
+    glow.addColorStop(0.5, ch.secondary + '18');
     glow.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, w, h);
 
-    // Interactive Browser / Device Frame Showcase in center
-    const frameW = w * 0.64;
-    const frameH = h * 0.56;
+    // Browser / Studio Viewport Frame in center
+    const frameW = w * 0.72;
+    const frameH = h * 0.68;
     const fx = (w - frameW) / 2;
-    const fy = h * 0.17;
+    const fy = h * 0.11;
 
     ctx.save();
-    ctx.fillStyle = 'rgba(18, 19, 26, 0.88)';
+    ctx.fillStyle = '#0e0e11';
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
     ctx.lineWidth = 1.5;
     roundRect(ctx, fx, fy, frameW, frameH, 14);
@@ -142,7 +153,7 @@ function initShowreelCanvas() {
     ctx.stroke();
 
     // Top browser bar dots
-    const dotColors = ['#ff5f56', '#ffbd2e', '#27c93f'];
+    const dotColors = ['#ff5f56', '#fdb912', '#10b981'];
     dotColors.forEach((c, i) => {
       ctx.fillStyle = c;
       ctx.beginPath();
@@ -150,60 +161,70 @@ function initShowreelCanvas() {
       ctx.fill();
     });
 
-    // URL pill inside browser mockup
+    // URL pill inside browser frame
     ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-    roundRect(ctx, fx + frameW * 0.25, fy + 9, frameW * 0.5, 18, 9);
+    roundRect(ctx, fx + frameW * 0.24, fy + 8, frameW * 0.52, 20, 10);
     ctx.fill();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.68)';
     ctx.font = `${Math.max(10, Math.floor(w * 0.009))}px monospace`;
     ctx.textAlign = 'center';
-    ctx.fillText('https://crafx.dev // [SHOWREEL VIDEO PLACEHOLDER]', fx + frameW * 0.5, fy + 22);
+    ctx.fillText('crafxstudio.com // CRAFX DEV DIGITAL SHOWCASE', fx + frameW * 0.5, fy + 22);
 
-    // Animated UI layout cards inside browser frame
-    const innerY = fy + 40;
-    const innerH = frameH - 52;
-    const cardCount = 3;
-    const gap = frameW * 0.03;
-    const cardW = (frameW - gap * 4) / cardCount;
+    // Draw real project image inside the browser viewport
+    const innerX = fx + 12;
+    const innerY = fy + 36;
+    const innerW = frameW - 24;
+    const innerH = frameH - 48;
 
-    for (let i = 0; i < cardCount; i++) {
-      const cx = fx + gap + i * (cardW + gap);
-      const wave = Math.sin(elapsed * 2.2 + i * 1.1) * 8;
-      const cy = innerY + 18 + wave;
-      const chCard = innerH * 0.46;
+    ctx.save();
+    roundRect(ctx, innerX, innerY, innerW, innerH, 8);
+    ctx.clip();
 
-      ctx.fillStyle = i === chIdx % 3 ? ch.accent + '38' : 'rgba(255,255,255,0.04)';
-      ctx.strokeStyle = i === chIdx % 3 ? ch.accent : 'rgba(255,255,255,0.1)';
-      roundRect(ctx, cx, cy, cardW, chCard, 8);
-      ctx.fill();
-      ctx.stroke();
-
-      // Mockup lines inside card
-      ctx.fillStyle = 'rgba(255,255,255,0.75)';
-      ctx.fillRect(cx + 14, cy + chCard - 34, cardW * 0.65, 6);
-      ctx.fillStyle = 'rgba(255,255,255,0.32)';
-      ctx.fillRect(cx + 14, cy + chCard - 20, cardW * 0.45, 4);
+    if (chImg && chImg.complete && chImg.naturalWidth > 0) {
+      const zoom = 1.02 + chProgress * 0.04;
+      const imgAspect = chImg.naturalWidth / chImg.naturalHeight;
+      const boxAspect = innerW / innerH;
+      let drawW = innerW * zoom;
+      let drawH = innerH * zoom;
+      if (imgAspect > boxAspect) {
+        drawW = innerH * imgAspect * zoom;
+      } else {
+        drawH = (innerW / imgAspect) * zoom;
+      }
+      const dx = innerX + (innerW - drawW) * 0.5;
+      const dy = innerY + (innerH - drawH) * 0.5;
+      ctx.drawImage(chImg, dx, dy, drawW, drawH);
     }
 
-    // Chapter typography overlay inside frame bottom
+    // Bottom gradient overlay for chapter title legibility
+    const textGrad = ctx.createLinearGradient(0, innerY + innerH * 0.35, 0, innerY + innerH);
+    textGrad.addColorStop(0, 'rgba(8, 8, 8, 0)');
+    textGrad.addColorStop(0.65, 'rgba(8, 8, 8, 0.78)');
+    textGrad.addColorStop(1, 'rgba(8, 8, 8, 0.95)');
+    ctx.fillStyle = textGrad;
+    ctx.fillRect(innerX, innerY, innerW, innerH);
+    ctx.restore();
+
+    // Chapter typography overlay
+    const padX = innerX + 24;
     ctx.textAlign = 'left';
-    ctx.fillStyle = ch.secondary;
-    ctx.font = `600 ${Math.max(11, Math.floor(w * 0.011))}px monospace`;
-    ctx.fillText(ch.code, fx + gap, fy + frameH - 64);
+    ctx.fillStyle = '#fdb912';
+    ctx.font = `600 ${Math.max(11, Math.floor(w * 0.0105))}px monospace`;
+    ctx.fillText(ch.code, padX, fy + frameH - 64);
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = `500 ${Math.max(16, Math.floor(w * 0.022))}px "Inter Tight", sans-serif`;
-    ctx.fillText(ch.title, fx + gap, fy + frameH - 36);
+    ctx.font = `500 ${Math.max(16, Math.floor(w * 0.021))}px "Inter Tight", sans-serif`;
+    ctx.fillText(ch.title, padX, fy + frameH - 38);
 
-    ctx.fillStyle = 'rgba(230, 230, 230, 0.68)';
-    ctx.font = `400 ${Math.max(12, Math.floor(w * 0.0125))}px "Inter Tight", sans-serif`;
-    ctx.fillText(ch.sub, fx + gap, fy + frameH - 14);
+    ctx.fillStyle = 'rgba(244, 243, 239, 0.72)';
+    ctx.font = `400 ${Math.max(12, Math.floor(w * 0.012))}px "Inter Tight", sans-serif`;
+    ctx.fillText(ch.sub, padX, fy + frameH - 16);
 
-    // Chapter progress bar along bottom of browser frame
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-    ctx.fillRect(fx, fy + frameH - 3, frameW, 3);
-    ctx.fillStyle = ch.accent;
-    ctx.fillRect(fx, fy + frameH - 3, frameW * chProgress, 3);
+    // Progress bar along bottom of browser frame
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+    ctx.fillRect(fx + 12, fy + frameH - 4, frameW - 24, 3);
+    ctx.fillStyle = '#fdb912';
+    ctx.fillRect(fx + 12, fy + frameH - 4, (frameW - 24) * chProgress, 3);
     ctx.restore();
 
     if (timeEl) {
@@ -215,12 +236,16 @@ function initShowreelCanvas() {
   requestAnimationFrame(render);
 }
 
-/* 2. Section 6: Services Visual Tabs Canvases */
+/* 2. Services Visual Tabs Canvases (With Real Project Previews) */
 function initServiceTabCanvases() {
   const canvases = document.querySelectorAll('[data-service-canvas]');
   canvases.forEach((canvas, idx) => {
     const ctx = canvas.getContext('2d');
     const tab = SERVICE_TABS[idx] || SERVICE_TABS[0];
+    const previewImg = new Image();
+    if (tab.image) {
+      previewImg.src = tab.image;
+    }
 
     function resize() {
       const rect = canvas.parentElement.getBoundingClientRect();
@@ -239,71 +264,71 @@ function initServiceTabCanvases() {
       const h = canvas.height;
 
       const grad = ctx.createLinearGradient(0, 0, w, h);
-      grad.addColorStop(0, '#12131c');
-      grad.addColorStop(1, '#0b0c12');
+      grad.addColorStop(0, '#0f1014');
+      grad.addColorStop(1, '#080808');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
-      // Radial accent glow
-      const glow = ctx.createRadialGradient(w * 0.5, h * 0.45, 10, w * 0.5, h * 0.45, w * 0.55);
-      glow.addColorStop(0, tab.themeColor + '55');
-      glow.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, w, h);
-
-      // Grid lines
-      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-      const step = Math.floor(w / 12);
-      for (let x = 0; x < w; x += step) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, h);
-        ctx.stroke();
-      }
-      for (let y = 0; y < h; y += step) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(w, y);
-        ctx.stroke();
-      }
-
-      // Visual illustration by tab index
-      const pad = w * 0.08;
+      // Draw real project image backdrop inside the service visual frame
+      const pad = w * 0.06;
       const boxW = w - pad * 2;
       const boxH = h - pad * 2;
 
-      ctx.fillStyle = 'rgba(20, 22, 30, 0.86)';
-      ctx.strokeStyle = tab.themeColor;
-      ctx.lineWidth = 1.5;
+      ctx.save();
       roundRect(ctx, pad, pad, boxW, boxH, 12);
-      ctx.fill();
+      ctx.clip();
+
+      if (previewImg.complete && previewImg.naturalWidth > 0) {
+        const scale = 1.03 + Math.sin(t * 0.5) * 0.02;
+        const dw = boxW * scale;
+        const dh = boxH * scale;
+        ctx.globalAlpha = 0.52;
+        ctx.drawImage(previewImg, pad + (boxW - dw) * 0.5, pad + (boxH - dh) * 0.5, dw, dh);
+        ctx.globalAlpha = 1;
+      }
+
+      const overlay = ctx.createLinearGradient(0, pad, 0, pad + boxH);
+      overlay.addColorStop(0, 'rgba(8, 8, 8, 0.72)');
+      overlay.addColorStop(0.5, 'rgba(8, 8, 8, 0.58)');
+      overlay.addColorStop(1, 'rgba(8, 8, 8, 0.92)');
+      ctx.fillStyle = overlay;
+      ctx.fillRect(pad, pad, boxW, boxH);
+      ctx.restore();
+
+      ctx.strokeStyle = 'rgba(253, 185, 18, 0.35)';
+      ctx.lineWidth = 1.25;
+      roundRect(ctx, pad, pad, boxW, boxH, 12);
       ctx.stroke();
 
       // Header badge inside visual
-      ctx.fillStyle = tab.accentColor;
-      ctx.font = `600 ${Math.max(11, Math.floor(w * 0.018))}px monospace`;
-      ctx.fillText(`CAPABILITY ${tab.nr} // ${tab.badge.toUpperCase()}`, pad + 24, pad + 36);
+      ctx.fillStyle = '#fdb912';
+      ctx.font = `600 ${Math.max(11, Math.floor(w * 0.017))}px monospace`;
+      ctx.fillText(`CAPABILITY ${tab.nr} // ${tab.badge.toUpperCase()}`, pad + 24, pad + 38);
 
       ctx.fillStyle = '#ffffff';
-      ctx.font = `500 ${Math.max(16, Math.floor(w * 0.032))}px "Inter Tight", sans-serif`;
-      ctx.fillText(tab.title, pad + 24, pad + 72);
+      ctx.font = `500 ${Math.max(16, Math.floor(w * 0.031))}px "Inter Tight", sans-serif`;
+      ctx.fillText(tab.title, pad + 24, pad + 74);
 
-      // Animated metric pills
+      // Deliverable pills at bottom of frame
       tab.metrics.forEach((m, mIdx) => {
-        const py = pad + 105 + mIdx * 48;
+        const py = pad + boxH - 156 + mIdx * 46;
         const barW = boxW - 48;
-        const pulse = 0.65 + 0.35 * Math.sin(t * 2 + mIdx);
+        const pulse = 0.72 + 0.25 * Math.sin(t * 1.8 + mIdx);
 
-        ctx.fillStyle = 'rgba(255,255,255,0.05)';
+        ctx.fillStyle = 'rgba(17, 17, 17, 0.84)';
         roundRect(ctx, pad + 24, py, barW, 34, 8);
         ctx.fill();
 
-        ctx.fillStyle = tab.themeColor + '44';
+        ctx.fillStyle = 'rgba(253, 185, 18, 0.22)';
         roundRect(ctx, pad + 24, py, barW * pulse, 34, 8);
         ctx.fill();
 
-        ctx.fillStyle = '#e6e6e6';
-        ctx.font = `500 ${Math.max(11, Math.floor(w * 0.019))}px monospace`;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+        roundRect(ctx, pad + 24, py, barW, 34, 8);
+        ctx.stroke();
+
+        ctx.fillStyle = '#f4f3ef';
+        ctx.font = `500 ${Math.max(11, Math.floor(w * 0.018))}px monospace`;
         ctx.fillText(`0${mIdx + 1}  ${m}`, pad + 38, py + 22);
       });
     }
@@ -311,87 +336,22 @@ function initServiceTabCanvases() {
   });
 }
 
-/* 3. Section 7: 3D Curved Arc Project Card Canvases */
+/* 3. Optional Canvas Fallback for 3D Arc Project Cards */
 function initProjectCardCanvases() {
   const canvases = document.querySelectorAll('[data-project-canvas]');
   canvases.forEach((canvas) => {
     const idx = Number(canvas.dataset.projectCanvas || 0);
     const project = PROJECTS_DATA[idx] || PROJECTS_DATA[0];
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     canvas.width = 420;
     canvas.height = 420;
-
-    let start = performance.now();
-    function draw(now) {
-      requestAnimationFrame(draw);
-      const t = (now - start) / 1000 + idx * 1.7;
-      const w = canvas.width;
-      const h = canvas.height;
-
-      // Rich brand-tinted dark backdrop
-      const bg = ctx.createLinearGradient(0, 0, w, h);
-      bg.addColorStop(0, '#12131a');
-      bg.addColorStop(0.6, '#171824');
-      bg.addColorStop(1, '#0b0c10');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, w, h);
-
-      // Moving spotlight orb
-      const ox = w * 0.5 + Math.cos(t * 0.9) * 70;
-      const oy = h * 0.45 + Math.sin(t * 1.1) * 55;
-      const rad = ctx.createRadialGradient(ox, oy, 8, ox, oy, 190);
-      rad.addColorStop(0, project.hex + '88');
-      rad.addColorStop(0.55, project.accentHex + '28');
-      rad.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = rad;
-      ctx.fillRect(0, 0, w, h);
-
-      // Isometric / layered interface cards inside the square preview
-      for (let layer = 2; layer >= 0; layer--) {
-        const offset = layer * 16;
-        const floatY = Math.sin(t * 1.6 + layer) * 5;
-        const lx = 42 + offset * 0.6;
-        const ly = 78 + offset + floatY;
-        const lw = w - 84 - offset * 1.2;
-        const lh = h - 148;
-
-        ctx.fillStyle = layer === 0 ? 'rgba(18, 19, 26, 0.92)' : 'rgba(255, 255, 255, 0.05)';
-        ctx.strokeStyle = layer === 0 ? project.hex : 'rgba(255, 255, 255, 0.12)';
-        ctx.lineWidth = layer === 0 ? 1.5 : 1;
-        roundRect(ctx, lx, ly, lw, lh, 12);
-        ctx.fill();
-        ctx.stroke();
-
-        if (layer === 0) {
-          // Header bar inside mockup
-          ctx.fillStyle = project.hex + '33';
-          roundRect(ctx, lx + 16, ly + 16, lw - 32, 76, 8);
-          ctx.fill();
-
-          ctx.fillStyle = project.accentHex;
-          ctx.font = '600 11px monospace';
-          ctx.fillText(`PROJECT ${project.num} // ${project.industry.toUpperCase()}`, lx + 28, ly + 42);
-
-          ctx.fillStyle = '#ffffff';
-          ctx.font = '600 18px "Inter Tight", sans-serif';
-          ctx.fillText(project.clientPlaceholder, lx + 28, ly + 70);
-
-          // Deliverable pills inside card
-          project.deliverables.slice(0, 3).forEach((deliv, dIdx) => {
-            const dy = ly + 108 + dIdx * 34;
-            ctx.fillStyle = 'rgba(255,255,255,0.06)';
-            roundRect(ctx, lx + 16, dy, lw - 32, 26, 6);
-            ctx.fill();
-
-            ctx.fillStyle = 'rgba(255,255,255,0.78)';
-            ctx.font = '11px monospace';
-            ctx.fillText(`→ ${deliv}`, lx + 28, dy + 17);
-          });
-        }
-      }
-    }
-    requestAnimationFrame(draw);
+    const bg = ctx.createLinearGradient(0, 0, 420, 420);
+    bg.addColorStop(0, '#111111');
+    bg.addColorStop(1, '#080808');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, 420, 420);
   });
 }
 
@@ -409,7 +369,7 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.closePath();
 }
 
-/* 4. Section 10: Contact Ocean Horizon & Shimmer Reflection Canvas */
+/* 4. Closing Contact Ocean Horizon & Shimmer Reflection Canvas */
 function initHorizonCanvas() {
   const canvas = document.getElementById('horizon-canvas');
   if (!canvas) return;
@@ -434,16 +394,16 @@ function initHorizonCanvas() {
 
     ctx.clearRect(0, 0, w, h);
 
-    // Horizon sun / moon atmospheric glow
+    // Warm CRAFX #FDB912 horizon glow
     const sunGlow = ctx.createRadialGradient(w * 0.5, horizonY, 4, w * 0.5, horizonY, w * 0.36);
-    sunGlow.addColorStop(0, 'rgba(255, 198, 145, 0.32)');
-    sunGlow.addColorStop(0.35, 'rgba(255, 122, 24, 0.12)');
+    sunGlow.addColorStop(0, 'rgba(253, 185, 18, 0.26)');
+    sunGlow.addColorStop(0.38, 'rgba(245, 158, 11, 0.09)');
     sunGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = sunGlow;
     ctx.fillRect(0, 0, w, h);
 
     // Crisp horizon seam line
-    ctx.strokeStyle = 'rgba(205, 220, 245, 0.28)';
+    ctx.strokeStyle = 'rgba(253, 185, 18, 0.26)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, horizonY);
@@ -457,19 +417,19 @@ function initHorizonCanvas() {
       const y = horizonY + 4 + Math.pow(p, 1.55) * (h - horizonY - 12);
       const spread = (0.06 + p * 0.38) * w;
       const sway = Math.sin(t * 1.4 + i * 0.55) * (12 + p * 28);
-      const alpha = (1 - p * 0.75) * 0.22;
+      const alpha = (1 - p * 0.75) * 0.2;
 
-      ctx.strokeStyle = `rgba(215, 228, 250, ${alpha.toFixed(3)})`;
-      ctx.lineWidth = 1 + p * 1.4;
+      ctx.strokeStyle = `rgba(253, 215, 130, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = 1 + p * 1.3;
       ctx.beginPath();
       ctx.moveTo(w * 0.5 - spread * 0.5 + sway, y);
       ctx.lineTo(w * 0.5 + spread * 0.5 + sway, y);
       ctx.stroke();
     }
 
-    // Subtle distant birds silhouette above horizon (matching bunqlabs.com --sea-birds)
+    // Subtle distant birds silhouette above horizon
     const birdCount = 4;
-    ctx.strokeStyle = 'rgba(220, 228, 240, 0.38)';
+    ctx.strokeStyle = 'rgba(230, 230, 230, 0.34)';
     ctx.lineWidth = 1.4;
     for (let b = 0; b < birdCount; b++) {
       const bx = ((w * 0.22 + b * 68 + t * (14 + b * 2)) % (w * 0.76)) + w * 0.12;

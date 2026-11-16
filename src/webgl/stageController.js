@@ -1,7 +1,8 @@
 /**
  * CRAFX DEV — Three.js 3D Hero Stage Controller
- * Recreates bunqlabs.com's 3D low-poly mountain peak, 4,000 falling snow particles,
- * floating showreel screen, tilted orbital ring, spinning 4-point red star, and pointer parallax.
+ * Recreates bunqlabs.com's 3D low-poly mountain peak, falling atmospheric particles,
+ * floating 3D portfolio screen (featuring Optellix), tilted orbital ring,
+ * spinning 4-point CRAFX yellow-orange (#FDB912) star, and pointer parallax.
  */
 const THREE = window.THREE;
 
@@ -21,26 +22,26 @@ function initHeroStage() {
   const scene = new THREE.Scene();
   const isLight = () => document.documentElement.dataset.theme === 'light';
 
-  const fogColorDark = new THREE.Color(0x0f0f12);
-  const fogColorLight = new THREE.Color(0xf2f4f8);
+  const fogColorDark = new THREE.Color(0x080808);
+  const fogColorLight = new THREE.Color(0xf4f3ef);
   scene.fog = new THREE.FogExp2(isLight() ? fogColorLight : fogColorDark, 0.042);
 
-  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 120);
+  const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 120);
   camera.position.set(0, 1.35, 9.2);
 
-  // Lights
+  // Lights anchored by CRAFX DEV's #FDB912 yellow-orange and Optellix emerald/teal
   const ambientLight = new THREE.AmbientLight(0xd8e2ff, 1.15);
   scene.add(ambientLight);
 
-  const rimLight = new THREE.DirectionalLight(0xff3232, 2.2);
+  const rimLight = new THREE.DirectionalLight(0xfdb912, 2.35);
   rimLight.position.set(5, 7, 4);
   scene.add(rimLight);
 
-  const coolLight = new THREE.DirectionalLight(0x6d86fe, 1.65);
+  const coolLight = new THREE.DirectionalLight(0x10b981, 1.45);
   coolLight.position.set(-6, 5, 3);
   scene.add(coolLight);
 
-  const backGlowLight = new THREE.PointLight(0xe8b94f, 2.4, 18);
+  const backGlowLight = new THREE.PointLight(0xfdb912, 2.4, 18);
   backGlowLight.position.set(0, 1.5, -2.5);
   scene.add(backGlowLight);
 
@@ -66,7 +67,7 @@ function initHeroStage() {
   mountainGeo.computeVertexNormals();
 
   const mountainMat = new THREE.MeshStandardMaterial({
-    color: isLight() ? 0xd8dce4 : 0x1a1c24,
+    color: isLight() ? 0xd8dce4 : 0x13151b,
     roughness: 0.78,
     metalness: 0.18,
     flatShading: true
@@ -75,32 +76,31 @@ function initHeroStage() {
   mountainMesh.position.set(0, -1.65, 0.5);
   rootGroup.add(mountainMesh);
 
-  // Subtle wireframe overlay on mountain ridge for technical craft feel
   const wireMat = new THREE.MeshBasicMaterial({
-    color: isLight() ? 0x9aa4b8 : 0x363b4d,
+    color: isLight() ? 0x9aa4b8 : 0x2f3340,
     wireframe: true,
     transparent: true,
-    opacity: 0.16
+    opacity: 0.14
   });
   const mountainWire = new THREE.Mesh(mountainGeo, wireMat);
   mountainWire.position.copy(mountainMesh.position);
   mountainWire.position.y += 0.006;
   rootGroup.add(mountainWire);
 
-  // 2. Floating 3D Showreel Screen + Orbital Ring + Spinning 4-Point Red Star
+  // 2. Floating 3D Portfolio Screen + Orbital Ring + Spinning 4-Point #FDB912 Star
   const showreelGroup = new THREE.Group();
-  showreelGroup.position.set(0, 2.05, -0.35);
+  showreelGroup.position.set(0, 2.08, -0.35);
   rootGroup.add(showreelGroup);
 
-  // Atmospheric God-Ray Halo Plane behind the showreel & mountain ridge
+  // Atmospheric Halo Plane behind the showreel & mountain ridge
   const haloCanvas = document.createElement('canvas');
   haloCanvas.width = 256;
   haloCanvas.height = 256;
   const hCtx = haloCanvas.getContext('2d');
   if (hCtx) {
     const hGrad = hCtx.createRadialGradient(128, 128, 8, 128, 128, 124);
-    hGrad.addColorStop(0, 'rgba(130, 148, 215, 0.36)');
-    hGrad.addColorStop(0.45, 'rgba(255, 50, 50, 0.12)');
+    hGrad.addColorStop(0, 'rgba(253, 185, 18, 0.22)');
+    hGrad.addColorStop(0.45, 'rgba(16, 185, 129, 0.10)');
     hGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     hCtx.fillStyle = hGrad;
     hCtx.fillRect(0, 0, 256, 256);
@@ -116,10 +116,17 @@ function initHeroStage() {
   haloMesh.position.set(0, 1.35, -1.6);
   rootGroup.add(haloMesh);
 
-  // Dynamic Canvas Texture for the 3D Showreel Screen
+  // Load real Optellix case study image for the 3D floating hero screen
+  const heroImg = new Image();
+  let heroImgLoaded = false;
+  heroImg.onload = () => {
+    heroImgLoaded = true;
+  };
+  heroImg.src = './assets/projects/optellix-cover.webp';
+
   const screenCanvas = document.createElement('canvas');
   screenCanvas.width = 512;
-  screenCanvas.height = 288;
+  screenCanvas.height = 320;
   const sCtx = screenCanvas.getContext('2d');
   const screenTexture = new THREE.CanvasTexture(screenCanvas);
   screenTexture.colorSpace = THREE.SRGBColorSpace;
@@ -130,60 +137,47 @@ function initHeroStage() {
     const h = screenCanvas.height;
 
     const grad = sCtx.createLinearGradient(0, 0, w, h);
-    grad.addColorStop(0, '#121526');
-    grad.addColorStop(0.55, '#1d1422');
-    grad.addColorStop(1, '#0d0f17');
+    grad.addColorStop(0, '#0a0f12');
+    grad.addColorStop(0.55, '#0f1c18');
+    grad.addColorStop(1, '#080808');
     sCtx.fillStyle = grad;
     sCtx.fillRect(0, 0, w, h);
 
-    // Animated grid lines
-    sCtx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
-    sCtx.lineWidth = 1;
-    const offset = (t * 28) % 32;
-    for (let x = -32; x < w + 32; x += 32) {
-      sCtx.beginPath();
-      sCtx.moveTo(x + offset, 0);
-      sCtx.lineTo(x + offset, h);
-      sCtx.stroke();
+    if (heroImgLoaded) {
+      sCtx.save();
+      sCtx.globalAlpha = 0.78;
+      const scale = 1.03 + Math.sin(t * 0.6) * 0.025;
+      const dw = w * scale;
+      const dh = h * scale;
+      sCtx.drawImage(heroImg, (w - dw) * 0.5, (h - dh) * 0.5, dw, dh);
+      sCtx.restore();
+
+      const vignette = sCtx.createLinearGradient(0, 0, 0, h);
+      vignette.addColorStop(0, 'rgba(8, 8, 8, 0.35)');
+      vignette.addColorStop(0.55, 'rgba(8, 8, 8, 0.12)');
+      vignette.addColorStop(1, 'rgba(8, 8, 8, 0.85)');
+      sCtx.fillStyle = vignette;
+      sCtx.fillRect(0, 0, w, h);
     }
-    for (let y = 0; y < h; y += 32) {
-      sCtx.beginPath();
-      sCtx.moveTo(0, y);
-      sCtx.lineTo(w, y);
-      sCtx.stroke();
-    }
 
-    // Glowing orb inside screen
-    const orbX = w * 0.5 + Math.cos(t * 1.4) * 75;
-    const orbY = h * 0.5 + Math.sin(t * 1.8) * 35;
-    const rad = sCtx.createRadialGradient(orbX, orbY, 4, orbX, orbY, 120);
-    rad.addColorStop(0, 'rgba(255, 50, 50, 0.65)');
-    rad.addColorStop(0.5, 'rgba(232, 185, 79, 0.25)');
-    rad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    sCtx.fillStyle = rad;
-    sCtx.fillRect(0, 0, w, h);
+    // Subtle frame border & verified project label
+    sCtx.strokeStyle = 'rgba(253, 185, 18, 0.35)';
+    sCtx.lineWidth = 1.5;
+    sCtx.strokeRect(10, 10, w - 20, h - 20);
 
-    // Frame border & HUD typography
-    sCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-    sCtx.strokeRect(14, 14, w - 28, h - 28);
-
-    sCtx.fillStyle = '#e8b94f';
-    sCtx.font = '600 13px monospace';
-    sCtx.textAlign = 'center';
-    sCtx.fillText('CRAFX [DEV] // WEB REEL', w / 2, h * 0.44);
+    sCtx.fillStyle = '#fdb912';
+    sCtx.font = '600 11px monospace';
+    sCtx.textAlign = 'left';
+    sCtx.fillText('FEATURED WORK // OPTELLIX 3D SAAS', 22, h - 42);
 
     sCtx.fillStyle = '#ffffff';
-    sCtx.font = '700 26px sans-serif';
-    sCtx.fillText('DESIGN × CODE × MOTION', w / 2, h * 0.57);
-
-    sCtx.fillStyle = 'rgba(255,255,255,0.55)';
-    sCtx.font = '11px monospace';
-    sCtx.fillText('[SHOWREEL PREVIEW]', w / 2, h * 0.72);
+    sCtx.font = '600 18px sans-serif';
+    sCtx.fillText('CRAFX DEV · DIGITAL STUDIO', 22, h - 20);
 
     screenTexture.needsUpdate = true;
   }
 
-  const screenGeo = new THREE.PlaneGeometry(2.35, 1.32);
+  const screenGeo = new THREE.PlaneGeometry(2.35, 1.46);
   const screenMat = new THREE.MeshBasicMaterial({
     map: screenTexture,
     side: THREE.DoubleSide
@@ -192,9 +186,9 @@ function initHeroStage() {
   showreelGroup.add(screenMesh);
 
   // Dark bezel behind screen
-  const bezelGeo = new THREE.BoxGeometry(2.44, 1.4, 0.06);
+  const bezelGeo = new THREE.BoxGeometry(2.44, 1.54, 0.06);
   const bezelMat = new THREE.MeshStandardMaterial({
-    color: 0x181920,
+    color: 0x111111,
     roughness: 0.4,
     metalness: 0.5
   });
@@ -203,9 +197,9 @@ function initHeroStage() {
   showreelGroup.add(bezelMesh);
 
   // Tilted 3D Orbital Ring around the screen
-  const ringGeo = new THREE.TorusGeometry(1.72, 0.018, 16, 100);
+  const ringGeo = new THREE.TorusGeometry(1.74, 0.016, 16, 100);
   const ringMat = new THREE.MeshStandardMaterial({
-    color: isLight() ? 0x666a73 : 0x7c8296,
+    color: isLight() ? 0x666a73 : 0x767a85,
     roughness: 0.35,
     metalness: 0.65
   });
@@ -214,7 +208,7 @@ function initHeroStage() {
   ringMesh.rotation.y = -Math.PI * 0.14;
   showreelGroup.add(ringMesh);
 
-  // 4-Point Red Star orbiting on the ring
+  // 4-Point #FDB912 CRAFX Star orbiting on the ring
   const starShape = new THREE.Shape();
   const outerR = 0.18;
   const innerR = 0.045;
@@ -235,33 +229,33 @@ function initHeroStage() {
     bevelSegments: 2
   });
   starGeo.center();
-  const starMat = new THREE.MeshBasicMaterial({ color: 0xff3232 });
+  const starMat = new THREE.MeshBasicMaterial({ color: 0xfdb912 });
   const starMesh = new THREE.Mesh(starGeo, starMat);
   starMesh.position.set(1.55, 0.35, 0.55);
   showreelGroup.add(starMesh);
 
-  // 3. 3,200 Falling Snow / Atmospheric Particles
-  const snowCount = 3200;
+  // 3. Atmospheric Particles (Reduced count on mobile for 60fps performance)
+  const isMobile = window.innerWidth <= 767;
+  const snowCount = isMobile ? 1200 : 2800;
   const snowPositions = new Float32Array(snowCount * 3);
   const snowSpeeds = new Float32Array(snowCount);
   for (let i = 0; i < snowCount; i++) {
     snowPositions[i * 3] = (Math.random() - 0.5) * 24;
     snowPositions[i * 3 + 1] = (Math.random() - 0.2) * 14;
     snowPositions[i * 3 + 2] = (Math.random() - 0.5) * 14;
-    snowSpeeds[i] = 0.4 + Math.random() * 0.9;
+    snowSpeeds[i] = 0.35 + Math.random() * 0.8;
   }
   const snowGeo = new THREE.BufferGeometry();
   snowGeo.setAttribute('position', new THREE.BufferAttribute(snowPositions, 3));
   const snowMat = new THREE.PointsMaterial({
     color: isLight() ? 0x1a1a1a : 0xffffff,
-    size: 0.038,
+    size: 0.034,
     transparent: true,
-    opacity: 0.65
+    opacity: 0.55
   });
   const snowPoints = new THREE.Points(snowGeo, snowMat);
   scene.add(snowPoints);
 
-  // Pointer parallax state
   let targetX = 0;
   let targetY = 0;
   let currentX = 0;
@@ -276,31 +270,29 @@ function initHeroStage() {
     { passive: true }
   );
 
-  // Theme sync helper
   function syncTheme() {
     const light = isLight();
     scene.fog.color.copy(light ? fogColorLight : fogColorDark);
-    mountainMat.color.setHex(light ? 0xdde1e8 : 0x181a22);
-    wireMat.color.setHex(light ? 0x8a92a6 : 0x353b4f);
+    mountainMat.color.setHex(light ? 0xdde1e8 : 0x13151b);
+    wireMat.color.setHex(light ? 0x8a92a6 : 0x2f3340);
     snowMat.color.setHex(light ? 0x202020 : 0xffffff);
   }
 
   window.addEventListener('crafx-theme-change', syncTheme);
 
-  // Resize handler
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  // Animation loop
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let clock = new THREE.Clock();
+
   function animate() {
     requestAnimationFrame(animate);
-    const elapsed = clock.getElapsedTime();
+    const elapsed = reducedMotion ? 0 : clock.getElapsedTime();
 
-    // Fade canvas out smoothly when scrolled far past hero so DOM sections remain crisp
     const scrollY = window.scrollY || window.pageYOffset;
     const vh = window.innerHeight || 800;
     const heroRatio = Math.max(0, Math.min(1, 1 - scrollY / (vh * 1.25)));
@@ -312,34 +304,34 @@ function initHeroStage() {
     currentX += (targetX - currentX) * 0.05;
     currentY += (targetY - currentY) * 0.05;
 
-    rootGroup.rotation.y = currentX * 0.16;
-    rootGroup.rotation.x = currentY * 0.07;
+    rootGroup.rotation.y = currentX * 0.14;
+    rootGroup.rotation.x = currentY * 0.06;
 
-    showreelGroup.position.y = 2.05 + Math.sin(elapsed * 1.3) * 0.08 - scrollY * 0.0012;
-    showreelGroup.rotation.y = Math.sin(elapsed * 0.5) * 0.12 + currentX * 0.12;
-    ringMesh.rotation.z = elapsed * 0.35;
+    showreelGroup.position.y = 2.08 + Math.sin(elapsed * 1.2) * 0.06 - scrollY * 0.0012;
+    showreelGroup.rotation.y = Math.sin(elapsed * 0.45) * 0.1 + currentX * 0.1;
+    ringMesh.rotation.z = elapsed * 0.32;
 
-    // Orbit the 4-point red star along the tilted orbital ring perimeter
-    const orbitAngle = elapsed * 0.55;
+    const orbitAngle = elapsed * 0.52;
     starMesh.position.set(
-      Math.cos(orbitAngle) * 1.72,
-      Math.sin(orbitAngle) * Math.cos(Math.PI * 0.38) * 1.72,
-      Math.sin(orbitAngle) * Math.sin(Math.PI * 0.38) * 1.72 + 0.12
+      Math.cos(orbitAngle) * 1.74,
+      Math.sin(orbitAngle) * Math.cos(Math.PI * 0.38) * 1.74,
+      Math.sin(orbitAngle) * Math.sin(Math.PI * 0.38) * 1.74 + 0.12
     );
-    starMesh.rotation.z = -elapsed * 1.8;
-    starMesh.rotation.y = elapsed * 1.2;
+    starMesh.rotation.z = -elapsed * 1.6;
+    starMesh.rotation.y = elapsed * 1.1;
 
-    // Update falling snow
-    const arr = snowGeo.attributes.position.array;
-    for (let i = 0; i < snowCount; i++) {
-      const idx = i * 3;
-      arr[idx + 1] -= snowSpeeds[i] * 0.014;
-      arr[idx] += Math.sin(elapsed * 0.6 + i) * 0.0025;
-      if (arr[idx + 1] < -3.5) {
-        arr[idx + 1] = 9.5;
+    if (!reducedMotion) {
+      const arr = snowGeo.attributes.position.array;
+      for (let i = 0; i < snowCount; i++) {
+        const idx = i * 3;
+        arr[idx + 1] -= snowSpeeds[i] * 0.012;
+        arr[idx] += Math.sin(elapsed * 0.6 + i) * 0.002;
+        if (arr[idx + 1] < -3.5) {
+          arr[idx + 1] = 9.5;
+        }
       }
+      snowGeo.attributes.position.needsUpdate = true;
     }
-    snowGeo.attributes.position.needsUpdate = true;
 
     renderer.render(scene, camera);
   }

@@ -53,8 +53,254 @@
 }
 
 /* ==========================================================================
-   Section 5: Video of Our Work (#video-showcase / .sp-cover)
+   Editorial Selected Work Showcase (.editorial-work)
    ========================================================================== */
+.editorial-work {
+  background: var(--paper);
+  color: var(--ink);
+  padding: var(--space-32) var(--grid-margin) var(--space-24);
+  position: relative;
+  z-index: 3;
+  border-top: 1px solid rgb(var(--ink-rgb) / 0.08);
+}
+
+.editorial-work__head {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  row-gap: var(--space-6);
+  align-items: end;
+  margin-bottom: var(--space-20);
+}
+
+.editorial-work__head .sp-head {
+  grid-column: 1 / span 7;
+}
+
+.editorial-work__intro {
+  grid-column: 8 / -1;
+  font-size: var(--type-text-sm);
+  color: rgb(var(--ink-rgb) / 0.68);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Flagship Case Study (Optellix) */
+.ed-flagship {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  row-gap: var(--space-8);
+  margin-bottom: var(--space-24);
+  padding-bottom: var(--space-24);
+  border-bottom: 1px solid rgb(var(--ink-rgb) / 0.1);
+}
+
+.ed-flagship__main {
+  grid-column: 1 / span 8;
+}
+
+.ed-flagship__side {
+  grid-column: 9 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.ed-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #111111;
+  box-shadow: var(--surface-edge);
+  text-decoration: none;
+  color: inherit;
+}
+
+.ed-media--16x10 {
+  aspect-ratio: 16 / 10;
+}
+
+.ed-media--4x3 {
+  aspect-ratio: 4 / 3;
+}
+
+.ed-media--square {
+  aspect-ratio: 1 / 1;
+}
+
+.ed-media__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .ed-media:hover .ed-media__img {
+    transform: scale(1.035);
+  }
+}
+
+.ed-media__badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  border-radius: var(--radius-pill);
+  background: rgba(8, 8, 8, 0.76);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  padding: 0.38rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  text-transform: uppercase;
+  color: #f4f3ef;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.ed-media__badge-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.ed-case__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  text-transform: uppercase;
+  color: rgb(var(--ink-rgb) / 0.52);
+}
+
+.ed-case__title {
+  font-family: var(--display-font);
+  font-weight: var(--display-weight);
+  font-size: var(--type-d4);
+  letter-spacing: var(--type-d4-track);
+  line-height: 1.04;
+  margin: var(--space-3) 0;
+  color: var(--ink);
+}
+
+.ed-case__desc {
+  font-size: var(--type-text-sm);
+  color: rgb(var(--ink-rgb) / 0.72);
+  line-height: 1.52;
+  margin: 0 0 var(--space-5);
+}
+
+.ed-case__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: var(--space-6);
+}
+
+.ed-case__tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: var(--button);
+  color: rgb(var(--ink-rgb) / 0.78);
+}
+
+.ed-case__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* 3-Image Secondary Strip for Optellix Responsive Views */
+.ed-strip {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  margin-top: var(--space-2);
+}
+
+.ed-strip__item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #111111;
+  box-shadow: var(--surface-edge);
+  aspect-ratio: 16 / 10;
+  position: relative;
+}
+
+.ed-strip__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .ed-strip__item:hover img {
+    transform: scale(1.04);
+  }
+}
+
+.ed-strip__caption {
+  position: absolute;
+  bottom: 0.65rem;
+  left: 0.75rem;
+  background: rgba(8, 8, 8, 0.74);
+  backdrop-filter: blur(8px);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* Asymmetric 2-Column Editorial Project Grid (7 Cols / 5 Cols) */
+.ed-asymmetric {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  row-gap: var(--space-16);
+  align-items: start;
+}
+
+.ed-card--wide {
+  grid-column: 1 / span 7;
+  display: grid;
+  row-gap: var(--space-5);
+}
+
+.ed-card--narrow {
+  grid-column: 8 / -1;
+  display: grid;
+  row-gap: var(--space-5);
+  margin-top: var(--space-12);
+}
+
+.work-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-card:hover .work-card__img {
+  transform: scale(1.04);
+}
 .video-section {
   background: var(--paper);
   color: var(--ink);

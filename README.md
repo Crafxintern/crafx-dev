@@ -1,28 +1,27 @@
-# CRAFX DEV — Official Agency Website (Homepage)
+# CRAFX DEV — Digital Design & Development Studio Website
 
-Creative web development agency website for **CRAFX DEV** (part of **CRAFX Studio**), designed and engineered after the `bunqlabs.com` UI/UX and motion reference.
+Official digital studio website for **CRAFX DEV** — *The Digital Design & Development Arm of CRAFX Studio LLP* (Mumbai, India · Working worldwide).
 
-## Homepage Structure (11 Continuous Sections)
+## 1. Visual & Content Sources of Truth
 
-1. **Header / Navigation (`.site-nav`)** — Floating glass pill with official `CRAFX [DEV]™` logo (`721×120` transparent PNG), smooth-scroll navigation (`Home`, `Dev Services`, `Projects`, `Reviews`, `Contact Us`), expandable `Menu` drawer with interactive service hover preview, `Let's talk` 3-step enquiry drawer, ambient sound toggle, and `Dark / Light / System` theme switcher.
-2. **Hero Section (`#hero`)** — Three.js 3D low-poly mountain peak, 3,200 falling snow particles, floating 3D showreel screen with tilted orbital ring & spinning 4-point red star, peripheral ScrambleText annotations, display headline with animated 3-stroke SVG underline, and CTAs.
-3. **Client Logos (`#clients`)** — 4×2 grid of 3D flipping client logo prisms (`.logo-roll`) using `[CLIENT LOGO 01–08]` placeholders.
-4. **About Us (`#about`)** — Editorial statement with staggered `.pen-word` reveal, variable slant typography, popping inline icons, red `.sel` selection frame, handwritten margin notes, and studio overview with live `IST` clock.
-5. **Video of Our Work (`#video-showcase`)** — Interactive 60fps showreel player with 4 capability chapters, Play/Pause & Chapter controls, and capability tags.
-6. **Services Cards (`#services`)** — Interactive numbered visual tabs (`01–04`) with auto-advancing progress bars + 3-column **Launch / Evolve / Scale** service cards with animated SVG doodle icons.
-7. **Projects Cards (`#projects`)** — 3D curved arc project card carousel (`01 / 06`) with pointer drag, dynamic floor spotlight glow, custom frosted-glass `Drag / Open` cursor bubble, and slide-up case study preview modal (`#project`).
-8. **Why Choose Us & Reviews (`#why-us` & `#reviews`)** — 6 differentiator cards with animated SVG doodles, client review carousel (`[CLIENT TESTIMONIAL PLACEHOLDERS]`), delivery promises checklist, and 4-step horizontal expanding process accordion.
-9. **FAQ (`#faq`)** — Sticky split-column FAQ with smooth-animating `<details>` accordions.
-10. **Contact Us (`#contact`)** — Atmospheric horizon backdrop + embedded 3-step interactive project enquiry form.
-11. **Footer (`.home-foot`)** — Official `CRAFX [DEV]™` brand lockup, 3-column collapsible sitemap, newsletter subscription, and global coordinates bar.
+1. **Primary Visual & Interaction Reference**: [`https://bunqlabs.com/`](https://bunqlabs.com/) (`/`, `/projects`, `/services`, `/studio`)
+2. **Official Company & Contact Source of Truth**: [`https://www.crafxstudio.com/`](https://www.crafxstudio.com/) (`/about`, `/services`, `/works/optellix`)
+   - **Email**: `hello@crafxstudio.com`
+   - **Phone / WhatsApp**: `+91 93214 29725`
+   - **Studio Address**: `CRAFX Studio LLP, Ajmera Sikova, Damodar Park, Ghatkopar (W), Mumbai – 400086, India`
+3. **Official Portfolio Source of Truth**: [`https://www.behance.net/crafxstudio`](https://www.behance.net/crafxstudio)
+   - **Optellix — 3D SaaS Interactive Website Design**: [`https://www.crafxstudio.com/works/optellix`](https://www.crafxstudio.com/works/optellix)
+   - **Fitness App — UI/UX Design & Brand Identity Case Study**: [`https://www.behance.net/gallery/252768879/Fitness-App-UI-UX-Design-Brand-Identity-Case-Study`](https://www.behance.net/gallery/252768879/Fitness-App-UI-UX-Design-Brand-Identity-Case-Study)
+   - **Ekotek — Brand Identity, Product Catalog & Digital Design**: [`https://www.behance.net/gallery/242358807/Ekotek-Brand-Identity-Product-Catalog-Digital-Design`](https://www.behance.net/gallery/242358807/Ekotek-Brand-Identity-Product-Catalog-Digital-Design)
+   - **Bharat Bank — Digital & Print Campaign Design**: [`https://www.behance.net/gallery/251529361/Bharat-Bank-Print-Digital-Brochure-Flyer-Design`](https://www.behance.net/gallery/251529361/Bharat-Bank-Print-Digital-Brochure-Flyer-Design)
 
-## Running Locally
+## 2. Brand Identity & Palette
 
-You can serve `C:\crafx\crafx dev` with any static HTTP server (zero build step required thanks to native ES modules and locally vendored `three.module.min.js`) or with Vite:
+- **Official Logo Asset**: `./assets/brand/crafx-dev-logo.png` (`721×120` transparent RGBA PNG, used 100% unmodified).
+- **Exact Sampled Accent Colour**: `#FDB912` (sampled directly from the yellow-orange `X` in `crafx-dev-logo.png`).
+- **Surface Palette**: Near-black `#080808` (`--night`), soft black `#111111` (`--coal`), fine border `#292929` (`--border-fine`), muted grey `#A3A3A3` (`--stone`), and soft off-white `#F4F3EF` (`--chalk`).
 
-```powershell
-cd "C:\crafx\crafx dev"
-python -m http.server 5173
-```
+## 3. How to Preview Locally
 
-Then open `http://localhost:5173`.
+- **Direct Browser Open (`file://`)**: Double-click `index.html` (`file:///C:/crafx/crafx%20dev/index.html`).
+- **Local HTTP Server (`http://`)**: Double-click `start-server.bat` (or run `powershell -ExecutionPolicy Bypass -File .\server.ps1`) and open `http://localhost:5173`.

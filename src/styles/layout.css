@@ -1584,6 +1584,22 @@ html:has(#project.open) .site-news {
   opacity: 1;
 }
 
+.client-logo__img {
+  max-width: 8.5rem;
+  max-height: 2.6rem;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: var(--ink-filter, brightness(0) invert(0.92));
+  opacity: 0.88;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.clientele-cell:hover .client-logo__img {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
 .client-placeholder__code {
   font-family: var(--display-font);
   font-weight: 500;

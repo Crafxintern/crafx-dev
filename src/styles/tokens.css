@@ -152,23 +152,26 @@
   --gulabi-800: #5f2c44;
   --gulabi-950: #25131b;
 
-  --white: #fff;
-  --chalk: #f9f9f9;
-  --mist: #f2f2f2;
+  --white: #ffffff;
+  --chalk: #f4f3ef;
+  --mist: #ecebe6;
   --fog: #e6e6e6;
-  --stone: #949494;
+  --stone: #a3a3a3;
   --stone-dark: #8a8a8a;
-  --graphite: #262626;
-  --coal: #1c1c1c;
-  --night: #0f0f0f;
-  --near-black: #0a0a0a;
-  --black: #000;
+  --border-fine: #292929;
+  --graphite: #1a1a1a;
+  --coal: #111111;
+  --night: #080808;
+  --near-black: #050505;
+  --black: #000000;
   --white-rgb: 255 255 255;
   --black-rgb: 0 0 0;
 
-  --accent: var(--red-500);
-  --accent-warm: var(--marigold-500);
-  --crafx-gold: #e8b94f;
+  /* Exact sampled yellow-orange (#FDB912) from the uploaded CRAFX DEV logo X */
+  --crafx-yellow: #fdb912;
+  --crafx-gold: #fdb912;
+  --accent: #fdb912;
+  --accent-warm: #f59e0b;
   --pen: var(--accent);
   --success: #16a34a;
   --error: #e75d60;
@@ -214,27 +217,27 @@
   --tag-bg: rgb(var(--ink-rgb) / 0.06);
   --tag-ink: rgb(var(--ink-rgb) / 0.55);
 
-  --scene-sky-top: #0a1b3d;
-  --scene-sky-bottom: #131720;
-  --scene-glow: #2c2e35;
-  --scene-rays: #767d9e;
-  --scene-ring: #4a4a4c;
-  --scene-haze: #131720;
-  --scene-snow: #fff;
+  --scene-sky-top: #090d16;
+  --scene-sky-bottom: #080808;
+  --scene-glow: #1f2229;
+  --scene-rays: #6e7385;
+  --scene-ring: #3d3d42;
+  --scene-haze: #080808;
+  --scene-snow: #ffffff;
   --scene-void: var(--paper);
   --scene-ink: var(--ink);
   --scene-type: var(--ink);
 
-  --scene-work-wall-top: #1c1c1c;
+  --scene-work-wall-top: #111111;
   --scene-work-wall-bottom: #060606;
-  --scene-work-seam: #000;
-  --scene-work-floor: #000;
-  --scene-work-lines: #222;
+  --scene-work-seam: #000000;
+  --scene-work-floor: #040404;
+  --scene-work-lines: #222222;
   --scene-work-rays: #bcbcbc;
-  --scene-work-haze: #000;
+  --scene-work-haze: #000000;
   --scene-work-card: var(--night);
   --scene-work-card-ink: var(--white);
-  --scene-work-card-edge: var(--graphite);
+  --scene-work-card-edge: var(--border-fine);
 
   --sea-sky: #2a3446;
   --sea-sky-edge: #060a12;

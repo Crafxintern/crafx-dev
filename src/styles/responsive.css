@@ -19,6 +19,20 @@
     display: none;
   }
 
+  .editorial-work__head .sp-head,
+  .editorial-work__intro,
+  .ed-flagship__main,
+  .ed-flagship__side,
+  .ed-card--wide,
+  .ed-card--narrow {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .ed-strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .about-overview__meta,
   .about-overview__main {
     grid-column: 1 / -1;
