@@ -1,1 +1,48 @@
-const toggle=document.querySelector('.menu');const nav=document.querySelector('#nav');toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav?.classList.toggle('is-open',open)});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('is-open');toggle?.setAttribute('aria-expanded','false')}));document.querySelectorAll('.service-list details').forEach(item=>item.addEventListener('toggle',()=>{if(item.open)document.querySelectorAll('.service-list details').forEach(other=>{if(other!==item)other.open=false})}));
+/**
+ * CRAFX DEV — Main Homepage Entry Point
+ * Initializes the Three.js 3D Hero Stage, Interactive Canvas Renderers,
+ * Lenis Smooth Scroll, and all BUNQ LABS-inspired UI Choreography.
+ */
+function initSmoothScroll() {
+  if (typeof window.Lenis !== 'function') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try {
+    const lenis = new window.Lenis({
+      duration: 1.12,
+      smoothWheel: true,
+      wheelMultiplier: 0.95
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  } catch (err) {
+    console.warn('Lenis smooth scroll skipped:', err);
+  }
+}
+
+function boot() {
+  try {
+    if (typeof initAllInteractions === 'function') initAllInteractions();
+  } catch (err) {
+    console.error('Interactions init error:', err);
+  }
+  try {
+    if (typeof initVisualRenderers === 'function') initVisualRenderers();
+  } catch (err) {
+    console.error('Visual renderers init error:', err);
+  }
+  try {
+    if (typeof initHeroStage === 'function') initHeroStage();
+  } catch (err) {
+    console.warn('WebGL fallback active:', err);
+  }
+  initSmoothScroll();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
